@@ -4,7 +4,7 @@ import appLogo from "../../icons/logo-app.svg";
 
 export default function ReviewAnswer() {
   return (
-    <div class="container">
+    <div className="container">
       <div className="row mt-1">
         {/* Header with logo */}
         <div className="col-12 col-xl-6 offset-xl-3 col-lg-8 offset-lg-2 col-md-10 offset-md-1">
