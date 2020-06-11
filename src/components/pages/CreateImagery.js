@@ -3,6 +3,7 @@ import saveIcon from "../../icons/save.svg";
 import Header from "../ui/Header";
 import Navigation from "../ui/Navigation";
 import AppTemplate from "../ui/AppTemplate";
+import { Link } from "react-router-dom";
 
 export default function CreateImagery() {
   return (
@@ -51,11 +52,15 @@ export default function CreateImagery() {
       {/* Clears float */}
       <div className="clearfix"></div>
 
-      <button id="delete-imagery" className="btn btn-link">
+      <Link to="/create-answer" id="delete-imagery" className="btn btn-link">
         Back to answer
-      </button>
+      </Link>
 
-      <button className="btn btn-lg btn-primary float-right" id="saveImagery">
+      <Link
+        to="/all-cards"
+        className="btn btn-lg btn-primary float-right"
+        id="saveImagery"
+      >
         <img
           alt=""
           src={saveIcon}
@@ -64,7 +69,7 @@ export default function CreateImagery() {
           className="mr-2"
         />
         Save
-      </button>
+      </Link>
     </AppTemplate>
   );
 }
