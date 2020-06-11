@@ -1,16 +1,11 @@
 import React from "react";
 import editIcon from "../../icons/edit.svg";
-import Header from "../ui/Header";
-import Navigation from "../ui/Navigation";
 import AppTemplate from "../ui/AppTemplate";
 import { Link } from "react-router-dom";
 
 export default function AllCards() {
   return (
     <AppTemplate>
-      <Header />
-      <Navigation />
-
       <div>
         {/* Search */}
         <div className="row mt-3">

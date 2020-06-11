@@ -1,15 +1,11 @@
 import React from "react";
 import saveIcon from "../../icons/save.svg";
-import Header from "../ui/Header";
-import Navigation from "../ui/Navigation";
 import AppTemplate from "../ui/AppTemplate";
 import { Link } from "react-router-dom";
 
 export default function Edit() {
   return (
     <AppTemplate>
-      <Header />
-      <Navigation />
       <div>
         <h4 className="my-4 text-center text-muted">Edit card</h4>
 

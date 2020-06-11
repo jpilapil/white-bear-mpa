@@ -1,7 +1,4 @@
 // Body elements
-body {
-  height: 1241px;
-}
 
 h1 {
   color: $white;
@@ -102,6 +99,7 @@ textarea {
   background-image: url(../img/background-landing.jpg);
   background-repeat: no-repeat;
   background-size: cover;
+  min-height: 100vh;
 }
 
 #login-button {
@@ -112,7 +110,7 @@ textarea {
 // fixes card padding issue on login page
 #inside-card {
   padding: 1rem;
-  margin-top: 5rem;
+  margin-top: 2rem;
 }
 
 // fixes button issue on login page

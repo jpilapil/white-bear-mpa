@@ -1,15 +1,11 @@
 import React from "react";
 import thumbsUpIcon from "../../icons/thumbs-up.svg";
-import Header from "../ui/Header";
-import Navigation from "../ui/Navigation";
 import AppTemplate from "../ui/AppTemplate";
 import { Link } from "react-router-dom";
 
 export default function ReviewAnswer() {
   return (
     <AppTemplate>
-      <Header />
-      <Navigation />
       <div className="mb-5"></div>
       {/* Card  */}
       <div className="mb-5">
@@ -45,7 +41,7 @@ export default function ReviewAnswer() {
         <Link to="/review-empty" className="btn btn-outline-primary mr-4">
           Needs Work
         </Link>
-        <Link to="/review-empty" className="btn btn-primary">
+        <Link to="/review-answer" className="btn btn-primary">
           <img
             alt=""
             src={thumbsUpIcon}
