@@ -47,12 +47,12 @@ export default function Edit() {
         {/* Clear float */}
         <div className="clearfix"></div>
 
-        <a href="/all-cards.html" id="discard-changes" className="btn btn-link">
+        <Link to="/all-cards" id="discard-changes" className="btn btn-link">
           Discard changes
-        </a>
+        </Link>
 
-        <a
-          href="/all-cards.html"
+        <Link
+          to="/all-cards"
           className="btn btn-lg btn-primary float-right"
           id="save-imagery"
         >
@@ -64,7 +64,7 @@ export default function Edit() {
             alt="save button"
           />
           Save
-        </a>
+        </Link>
 
         {/* Card props and delete card */}
 
