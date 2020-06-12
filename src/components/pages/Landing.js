@@ -1,5 +1,6 @@
 import React from "react";
 import landingLogo from "../../img/logo-landing.png";
+import { Link } from "react-router-dom";
 
 export default function Landing() {
   return (
@@ -29,13 +30,14 @@ export default function Landing() {
                   <p className="card-text-landing mb-6">
                     Sign up for White Bear. Free forever.
                   </p>
-                  <button
+                  <Link
+                    to="/create-answer"
                     id="sign-up-button"
                     type="button"
                     className="btn btn-success btn-lg btn-block btn-lg landing-button"
                   >
                     Sign up
-                  </button>
+                  </Link>
                   {/* second login card */}
                   <div id="sign-up-card2">
                     <p className="card-text-landing sign-up-text">
@@ -65,13 +67,13 @@ export default function Landing() {
                     </div>
                     {/* password error messages */}
                     <div className="invalidPasswordFeedback"></div>
-                    <button
-                      href="#"
+                    <Link
+                      to="/create-answer"
                       id="letsGo"
-                      className="btn btn-success btn-lg btn-block btn-lg landing-button"
+                      className="btn btn-success btn-lg btn-block btn-lg landing-Link"
                     >
                       Let's go!
-                    </button>
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -123,13 +125,13 @@ export default function Landing() {
                       Your password must be at least 9 characters
                     </div>
 
-                    <button
-                      href="#"
+                    <Link
+                      to="/create-answer"
                       id="logIn"
-                      className="btn btn-success bt-lg  float-right landing-button"
+                      className="btn btn-success bt-lg  float-right landing-Link"
                     >
                       Log in
-                    </button>
+                    </Link>
                   </div>
                 </div>
               </div>
