@@ -2,6 +2,9 @@ import React from "react";
 import saveIcon from "../../icons/save.svg";
 import AppTemplate from "../ui/AppTemplate";
 import { Link } from "react-router-dom";
+import memoryCards from "../../mock-data/memory-cards";
+import toDisplayDate from "date-fns/format";
+const memoryCard = memoryCards[2];
 
 export default function Edit() {
   return (
@@ -13,10 +16,16 @@ export default function Edit() {
         <div className="mb-2">
           <div className="card bg-primary">
             <div className="card-body">
-              <textarea rows="11" className="d-sm-none" autoFocus></textarea>
+              <textarea
+                rows="11"
+                className="d-sm-none"
+                defaultValue={memoryCard.imagery}
+                autoFocus
+              ></textarea>
               <textarea
                 rows="8"
                 className="d-none d-sm-block"
+                defaultValue={memoryCard.imagery}
                 autoFocus
               ></textarea>
             </div>
@@ -24,12 +33,18 @@ export default function Edit() {
 
           <div className="card bg-secondary">
             <div className="card-body">
-              <p>
-                A wonderful serenity has taken possession of my entire soul,
-                like these sweet mornings of spring which I enjoy with my whole
-                heart. I am alone, and feel the charm of existence in this spot,
-                which was created for the
-              </p>
+              <textarea
+                rows="11"
+                className="d-sm-none"
+                defaultValue={memoryCard.answer}
+                autoFocus
+              ></textarea>
+              <textarea
+                rows="8"
+                className="d-none d-sm-block"
+                defaultValue={memoryCard.answer}
+                autoFocus
+              ></textarea>
             </div>
           </div>
         </div>
@@ -67,19 +82,22 @@ export default function Edit() {
         <h4 className="text-center mt-5 text-muted">Card properties</h4>
         <div className="row mt-5">
           <p className="text-muted col-4 mb-5">
-            Created: <br />
-            Last attempt: <br />
-            attempt: <br />
+            Created:
+            <br />
+            Last attempt:
+            <br />
+            Next Attempt:
+            <br />
             Consecutives:
             <br />
           </p>
           <p className="col-5">
-            May 7, 2020 <br />
-            May 7, 2020
+            {toDisplayDate(memoryCard.createdAt, "MMM. d, y")} <br />
+            {toDisplayDate(memoryCard.lastAttemptAt, "MMM. d, y")}
             <br />
-            May 7, 2020
+            {toDisplayDate(memoryCard.nextAttemptAt, "MMM. d, y")}
             <br />
-            10
+            {memoryCard.totalSuccessfulAttempts}
             <br />
           </p>
 

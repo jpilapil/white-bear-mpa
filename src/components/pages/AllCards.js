@@ -1,7 +1,9 @@
 import React from "react";
-import editIcon from "../../icons/edit.svg";
 import AppTemplate from "../ui/AppTemplate";
-import { Link } from "react-router-dom";
+import MemoryCard from "../ui/MemoryCard";
+import memoryCards from "../../mock-data/memory-cards";
+
+// const memoryCard = memoryCards[2];
 
 export default function AllCards() {
   return (
@@ -38,88 +40,17 @@ export default function AllCards() {
             </select>
           </div>
         </div>
-
-        {/* Card */}
-        <div className="row">
-          <div className="col-9">
-            <div className="mb-5">
-              <div className="card bg-primary">
-                <div className="card-body">
-                  <p>
-                    A wonderful serenity has taken possession of my entire soul,
-                    like these sweet mornings of spring which I enjoy with my
-                    whole heart. I am alone, and feel the charm of existence in
-                    this spot, which was created for the bliss of souls like
-                    mine. I am so happy, my dear friend, so absorbed in the
-                    exquisit
-                  </p>
-                </div>
-              </div>
-
-              <div className="card bg-secondary">
-                <div className="card-body">
-                  <p>
-                    A wonderful serenity has taken possession of my entire soul,
-                    like these sweet mornings of spring which I enjoy with my
-                    whole heart. I am alone, and feel the charm of existence in
-                    this spot, which was created for the bliss of souls like
-                    mine. I am so happy, my dear friend, so absorbed in the
-                    exquisit
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Edit button */}
-          <div className="col-3">
-            <Link to="/edit" className="btn btn-link d-inline">
-              <img src={editIcon} alt="Edit Button" width="20px;" />
-              Edit
-            </Link>
-          </div>
-        </div>
-
-        {/* Second card */}
-        <div className="row">
-          <div className="col-9">
-            <div className="mb-5">
-              <div className="card bg-primary">
-                <div className="card-body">
-                  <p>
-                    A wonderful serenity has taken possession of my entire soul,
-                    like these sweet mornings of spring which I enjoy with my
-                    whole heart. I am alone, and feel the charm of existence in
-                    this spot, which was created for the bliss of souls like
-                    mine. I am so happy, my dear friend, so absorbed in the
-                    exquisit
-                  </p>
-                </div>
-              </div>
-
-              <div className="card bg-secondary">
-                <div className="card-body">
-                  <p>
-                    A wonderful serenity has taken possession of my entire soul,
-                    like these sweet mornings of spring which I enjoy with my
-                    whole heart. I am alone, and feel the charm of existence in
-                    this spot, which was created for the bliss of souls like
-                    mine. I am so happy, my dear friend, so absorbed in the
-                    exquisit
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Edit button */}
-          <div className="col-3">
-            <Link to="/edit" className="btn btn-link d-inline">
-              <img src={editIcon} alt="Edit Link" width="20px;" />
-              Edit
-            </Link>
-          </div>
-        </div>
+        {memoryCards.map((memoryCard) => {
+          // map through memory cards array, get each memory card
+          // find each card by id, return answer and imagery values
+          return (
+            <MemoryCard
+              answer={memoryCard.answer}
+              imagery={memoryCard.imagery}
+              key={memoryCard.id}
+            />
+          );
+        })}
       </div>
     </AppTemplate>
   );
