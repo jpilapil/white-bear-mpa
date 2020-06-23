@@ -19,9 +19,7 @@ export default class CreateAnswer extends React.Component {
   checkTextLimit() {
     if (
       this.state.answerText.length > MAX_CARD_CHARS ||
-      this.state.answerText.length === 0 ||
-      this.state.imageryText.length > MAX_CARD_CHARS ||
-      this.state.imageryText.length === 0
+      this.state.answerText.length === 0
     ) {
       return true;
     } else return false;
