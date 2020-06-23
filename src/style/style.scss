@@ -161,3 +161,8 @@ textarea {
   color: $danger;
   font-size: $font-size-base;
 }
+
+.disabled {
+  pointer-events: fill !important;
+  cursor: not-allowed;
+}

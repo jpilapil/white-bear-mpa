@@ -1,70 +1,124 @@
 import React from "react";
 import saveIcon from "../../icons/save.svg";
 import AppTemplate from "../ui/AppTemplate";
+import memoryCards from "../../mock-data/memory-cards";
+import classnames from "classnames";
+import { checkIsOver, MAX_CARD_CHARS } from "../../utils/helpers";
 import { Link } from "react-router-dom";
 
-export default function CreateImagery() {
-  return (
-    <AppTemplate>
-      <h4 className="my-4 text-center text-muted">Add memorable imagery</h4>
+const memoryCard = memoryCards[2];
 
-      {/* Card */}
-      <div className="mb-2">
-        <div className="card bg-primary">
-          <div className="card-body">
-            <textarea
-              rows="11"
-              className="d-sm-none"
-              autoFocus={true}
-            ></textarea>
-            <textarea
-              rows="6"
-              className="d-none d-sm-block"
-              autoFocus={true}
-            ></textarea>
+export default class CreateImagery extends React.Component {
+  constructor(props) {
+    super(props);
+    console.log("in here");
+    this.state = {
+      answerText: memoryCard.answer,
+      imageryText: memoryCard.imagery,
+    };
+  }
+
+  checkTextLimit() {
+    if (
+      this.state.answerText.length > MAX_CARD_CHARS ||
+      this.state.answerText.length === 0 ||
+      this.state.imageryText.length > MAX_CARD_CHARS ||
+      this.state.imageryText.length === 0
+    ) {
+      return true;
+    } else return false;
+  }
+
+  setImageryText(e) {
+    this.setState({ imageryText: e.target.value });
+  }
+
+  setAnswerText(e) {
+    this.setState({ answerText: e.target.value });
+  }
+
+  render() {
+    return (
+      <AppTemplate>
+        <h4 className="my-4 text-center text-muted">Add memorable imagery</h4>
+
+        {/* Card */}
+        <div className="mb-2">
+          <div className="card bg-primary">
+            <div className="card-body">
+              {/* <textarea
+                rows="11"
+                className="d-sm-none"
+                autoFocus={true}
+              ></textarea> */}
+              <textarea
+                rows="8"
+                defaultValue={memoryCard.imagery}
+                autoFocus
+                onChange={(e) => this.setImageryText(e)}
+              ></textarea>
+            </div>
+          </div>
+
+          <div className="card bg-secondary">
+            <div className="card-body">
+              <textarea
+                rows="8"
+                defaultValue={memoryCard.answer}
+                autoFocus
+                onChange={(e) => this.setAnswerText(e)}
+              ></textarea>
+            </div>
           </div>
         </div>
 
-        <div className="card bg-secondary">
-          <div className="card-body">
-            <p>
-              A wonderful serenity has taken possession of my entire soul, like
-              these sweet mornings of spring which I enjoy with my whole heart.
-              I am alone, and feel the charm of existence in this spot, which
-              was created for the bliss of souls like mine. I am so happy, my
-              dear friend, so absorbed in the exquisit
-            </p>
-          </div>
-        </div>
-      </div>
+        {/* Character counter */}
+        <p className="float-right mt-2 mb-5 text-muted">
+          <span
+            className={classnames({
+              "text-danger": checkIsOver(this.state.answerText, MAX_CARD_CHARS),
+            })}
+          >
+            Bottom: {this.state.answerText.length}/{MAX_CARD_CHARS}
+          </span>
+        </p>
+        <p className="float-left mt-2 mb-5 text-muted">
+          <span
+            className={classnames({
+              "text-danger": checkIsOver(
+                this.state.imageryText,
+                MAX_CARD_CHARS
+              ),
+            })}
+          >
+            Top: {this.state.imageryText.length}/{MAX_CARD_CHARS}
+          </span>
+        </p>
 
-      {/* Character counter */}
-      <div id="the-count" className="float-right my-2">
-        <span id="current">0</span>
-        <span id="maximum">/ 240</span>
-      </div>
+        {/* Clears float */}
+        <div className="clearfix"></div>
 
-      {/* Clears float */}
-      <div className="clearfix"></div>
+        <Link to="/create-answer" id="delete-imagery" className="btn btn-link">
+          Back to answer
+        </Link>
 
-      <Link to="/create-answer" id="delete-imagery" className="btn btn-link">
-        Back to answer
-      </Link>
-
-      <Link
-        to="/all-cards"
-        className="btn btn-lg btn-primary float-right"
-        id="saveImagery"
-      >
-        <img
-          alt=""
-          src={saveIcon}
-          width="20px"
-          style={{ marginBottom: "3px" }}
-          className="mr-2"
-        />
-        Save
-      </Link>
-    </AppTemplate>
-  );
+        <Link
+          to="all-cards"
+          className={classnames("btn btn-lg btn-primary float-right", {
+            disabled: this.checkTextLimit(),
+          })}
+          id="save-imagery"
+        >
+          <img
+            src={saveIcon}
+            width="20px"
+            style={{ marginBottom: "3px" }}
+            className="mr-2"
+            alt="save button"
+          />
+          Save
+        </Link>
+      </AppTemplate>
+    );
+  }
 }
