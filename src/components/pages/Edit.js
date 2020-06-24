@@ -16,6 +16,7 @@ export default class Edit extends React.Component {
     this.state = {
       answerText: memoryCard.answer,
       imageryText: memoryCard.imagery,
+      isDeleteChecked: false,
     };
   }
 
@@ -36,6 +37,10 @@ export default class Edit extends React.Component {
 
   setAnswerText(e) {
     this.setState({ answerText: e.target.value });
+  }
+
+  showDeleteButton() {
+    this.setState({ isDeleteChecked: !this.state.isDeleteChecked });
   }
 
   render() {
@@ -155,6 +160,10 @@ export default class Edit extends React.Component {
                 type="checkbox"
                 className="custom-control-input"
                 id="show-delete"
+                onClick={() => {
+                  // on click, runs showDeleteButton func
+                  this.showDeleteButton();
+                }}
               />
               <label
                 className="custom-control-label text-muted"
@@ -163,13 +172,15 @@ export default class Edit extends React.Component {
                 Show Delete Button
               </label>
             </div>
-            <Link
-              to="/all-cards"
-              className="btn btn-lg btn-outline-danger d-none ml-3"
-              id="delete-card"
-            >
-              Delete this card
-            </Link>
+            {this.state.isDeleteChecked && ( // if isDeleteChecked = true, show delete button
+              <Link
+                to="/all-cards"
+                className="btn btn-lg btn-outline-danger ml-3"
+                id="delete-card"
+              >
+                Delete this card
+              </Link>
+            )}
           </div>
         </div>
       </AppTemplate>
