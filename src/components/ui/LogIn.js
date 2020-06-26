@@ -1,10 +1,11 @@
 import React from "react";
-// import { Link } from "react-router-dom";
 import classnames from "classnames";
 import hash from "object-hash";
 import { v4 as getUuid } from "uuid";
+import { withRouter } from "react-router-dom";
+import { EMAIL_REGEX } from "../../utils/helpers";
 
-export default class LogIn extends React.Component {
+class LogIn extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -18,14 +19,13 @@ export default class LogIn extends React.Component {
   // email error messages
   async setEmailState(emailInput) {
     const lowerCasedEmailInput = emailInput.toLowerCase();
-    // eslint-disable-next-line
-    const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
     if (emailInput === "")
       this.setState({
         emailError: "Please enter your email address.",
         hasEmailError: true,
       });
-    else if (emailRegex.test(lowerCasedEmailInput) === false) {
+    else if (EMAIL_REGEX.test(lowerCasedEmailInput) === false) {
       this.setState({
         emailError: "Please enter a valid email address.",
         hasEmailError: true,
@@ -44,26 +44,9 @@ export default class LogIn extends React.Component {
 
   // password error messages
   async setPasswordState(passwordInput, emailInput) {
-    const uniqChars = [...new Set(passwordInput)];
     if (passwordInput === "") {
       this.setState({
         passwordError: "Please enter a password.",
-        hasPasswordError: true,
-      });
-    } else if (passwordInput.length < 9) {
-      this.setState({
-        passwordError: "Your password must be at least 9 characters.",
-        hasPasswordError: true,
-      });
-    } else if (this.checkHasLocalPart(passwordInput, emailInput)) {
-      this.setState({
-        passwordError: "Your password cannot contain your email address.",
-        hasPasswordError: true,
-      });
-    } else if (uniqChars.length < 3) {
-      this.setState({
-        passwordError:
-          "Your password must contain at least 3 unique characters.",
         hasPasswordError: true,
       });
     } else {
@@ -89,6 +72,7 @@ export default class LogIn extends React.Component {
         createdAt: Date.now(),
       };
       console.log(user);
+      this.props.history.push("/create-answer");
     }
   }
 
@@ -153,3 +137,4 @@ export default class LogIn extends React.Component {
     );
   }
 }
+export default withRouter(LogIn);

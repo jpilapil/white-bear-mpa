@@ -9,14 +9,52 @@ import orderBy from "lodash/orderBy";
 export default class AllCards extends React.Component {
   constructor(props) {
     super(props);
+
     this.state = {
       order: '[["createdAt"], ["desc"]]',
-      memoryCards: orderBy(memoryCards, ["createdAt"], ["desc"]),
+      displayedMemoryCards: orderBy(memoryCards, '[["createdAt"], ["desc"]]'),
+      allMemoryCards: orderBy(memoryCards, '[["createdAt"], ["desc"]]'),
     };
   }
 
+  filterByInput() {
+    const input = document.getElementById("search-input").value;
+    const lowerCasedInput = input.toLowerCase();
+    console.log(lowerCasedInput);
+    const copyOfAllMemoryCards = [...this.state.allMemoryCards];
+    const filteredMemoryCards = copyOfAllMemoryCards.filter((memoryCard) => {
+      const lowerCasedImagery = memoryCard.imagery.toLowerCase();
+      const lowerCasedAnswer = memoryCard.answer.toLowerCase();
+      if (
+        lowerCasedImagery.includes(lowerCasedInput) ||
+        lowerCasedAnswer.includes(lowerCasedInput)
+      ) {
+        return true;
+      }
+      return false;
+    });
+    this.setState({ displayedMemoryCards: filteredMemoryCards }, () => {
+      this.setMemoryCards();
+    });
+  }
+
+  setOrder(e) {
+    const newOrder = e.target.value;
+    console.log(newOrder); //returns string
+    this.setState({ order: newOrder }, () => {
+      this.setMemoryCards();
+    }); //updates state of the select to show which filter you clicked on (most recent, oldest, hardest, etc)
+  }
+
+  setMemoryCards() {
+    console.log("setting memcard");
+    const copyOfDisplayedMemoryCards = [...this.state.displayedMemoryCards]; // array of all our memory cards, shallow copy
+    const toJson = JSON.parse(this.state.order);
+    const orderedMemoryCards = orderBy(copyOfDisplayedMemoryCards, ...toJson);
+    this.setState({ displayedMemoryCards: orderedMemoryCards }); //updates state of the select to show which filter you clicked on (most recent, oldest, hardest, etc)
+  }
+
   setMemoryCardsOrder(e) {
-    console.log("changed");
     const newOrder = e.target.value;
     console.log(newOrder); //returns string
     const copyOfMemoryCards = [...this.state.memoryCards]; // array of all our memory cards, shallow copy
@@ -36,10 +74,14 @@ export default class AllCards extends React.Component {
                 type="search"
                 className="form-control border"
                 placeholder="Search for a word"
+                id="search-input"
               />
             </div>
             <div className="col-4 col-sm-4 mb-4">
-              <button className="btn btn-sm btn-primary float-right">
+              <button
+                className="btn btn-sm btn-primary float-right"
+                onClick={() => this.filterByInput()}
+              >
                 Search
               </button>
             </div>
@@ -55,7 +97,7 @@ export default class AllCards extends React.Component {
               <select
                 value={this.state.order}
                 className="form-control form-control-sm"
-                onChange={(e) => this.setMemoryCardsOrder(e)}
+                onChange={(e) => this.setOrder(e)}
               >
                 <option value='[["createdAt"], ["desc"]]'>Most recent</option>
                 <option value='[["createdAt"], ["asc"]]'>Oldest</option>
@@ -68,7 +110,7 @@ export default class AllCards extends React.Component {
               </select>
             </div>
           </div>
-          {this.state.memoryCards.map((memoryCard) => {
+          {this.state.displayedMemoryCards.map((memoryCard) => {
             // map through memory cards array, get each memory card
             // find each card by id, return answer and imagery values
             return (
