@@ -13,7 +13,9 @@ class ReviewImagery extends React.Component {
 
     // Make a request for a user with a given ID
     axios
-      .get("https://run.mocky.io/v3/91873f97-6f2f-48d4-be40-bd12d67089fc")
+      .get(
+        "https://raw.githubusercontent.com/jpilapil/white-bear-mpa/master/src/mock-data/memory-cards.json"
+      )
       .then(function (response) {
         // handle success
         console.log(response);
