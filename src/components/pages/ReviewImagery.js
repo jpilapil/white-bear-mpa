@@ -9,20 +9,27 @@ class ReviewImagery extends React.Component {
   constructor(props) {
     super(props);
 
-    // Make a request for a user with a given ID
-    axios
-      .get(
-        "https://raw.githubusercontent.com/jpilapil/white-bear-mpa/master/src/mock-data/memory-cards.json"
-      )
-      .then(function (res) {
-        // handle success
-        console.log(res);
-        props.dispatch({ type: actions.STORE_QUEUED_CARDS, payload: res.data }); // payload = all of our data(array of objects)
-      })
-      .catch(function (error) {
-        // handle error
-        console.log(error);
-      });
+    // if length of cards array is 0 (empty), get more cards
+    if (props.queue.cards.length === 0) {
+      console.log("empty array queue cards");
+      // Make a request for a user with a given ID
+      axios
+        .get(
+          "https://raw.githubusercontent.com/jpilapil/white-bear-mpa/master/src/mock-data/memory-cards.json"
+        )
+        .then(function (res) {
+          // handle success
+          console.log(res);
+          props.dispatch({
+            type: actions.STORE_QUEUED_CARDS,
+            payload: res.data,
+          }); // payload = all of our data(array of objects)
+        })
+        .catch(function (error) {
+          // handle error
+          console.log(error);
+        });
+    }
   }
 
   render() {

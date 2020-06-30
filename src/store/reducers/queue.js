@@ -10,6 +10,10 @@ export default function queue(queue = {}, action) {
     case actions.UPDATE_INDEX_OF_CURRENT_CARD: // if action is type of UPDATE_INDEX_OF_CURRENT_CARD, run
       newQueue.index += 1;
       return newQueue; // new state
+    case actions.RESET_QUEUE:
+      newQueue.cards = [];
+      newQueue.index = 0;
+      return newQueue;
     default:
       // else, return initial state
       return queue;

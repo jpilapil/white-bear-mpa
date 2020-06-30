@@ -7,8 +7,15 @@ import actions from "../../store/actions";
 
 class ReviewAnswer extends React.Component {
   goToNextCard() {
-    this.props.dispatch({ type: actions.UPDATE_INDEX_OF_CURRENT_CARD });
-    this.props.history.push("/review-imagery");
+    // if queue is empty, go to out of cards page
+    if (this.props.queue.index === this.props.queue.cards.length - 1) {
+      this.props.dispatch({ type: actions.RESET_QUEUE });
+      this.props.history.push("/review-empty");
+    } else {
+      // if queue is not empty, go to next card
+      this.props.dispatch({ type: actions.UPDATE_INDEX_OF_CURRENT_CARD });
+      this.props.history.push("/review-imagery");
+    }
   }
   render() {
     const memoryCard = this.props.queue.cards[this.props.queue.index]; // get all the cards from the queue and use bracket notation to find the index of the current card
@@ -33,7 +40,7 @@ class ReviewAnswer extends React.Component {
           <button
             className="btn btn-outline-primary mr-4"
             onClick={() => {
-              this.goToNextCard();
+              this.goToNextCard(); // on click, run this function
             }}
           >
             Needs Work
