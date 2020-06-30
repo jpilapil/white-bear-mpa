@@ -11,7 +11,7 @@ class ReviewAnswer extends React.Component {
     this.props.history.push("/review-imagery");
   }
   render() {
-    const memoryCard = this.props.queuedCards[this.props.indexOfCurrentCard];
+    const memoryCard = this.props.queue.cards[this.props.queue.index]; // get all the cards from the queue and use bracket notation to find the index of the current card
     return (
       <AppTemplate>
         <div className="mb-5"></div>
@@ -61,8 +61,7 @@ class ReviewAnswer extends React.Component {
 function mapStateToProps(state) {
   // map state to props in local component
   return {
-    queuedCards: state.queuedCards,
-    indexOfCurrentCard: state.indexOfCurrentCard,
+    queue: state.queue,
   };
 }
 export default connect(mapStateToProps)(ReviewAnswer);
