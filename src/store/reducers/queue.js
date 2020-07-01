@@ -7,8 +7,11 @@ export default function queue(queue = {}, action) {
     case actions.STORE_QUEUED_CARDS: // if action is type of STORE_QUEUED_CARDS, run
       newQueue.cards = action.payload;
       return newQueue; // new state
-    case actions.UPDATE_INDEX_OF_CURRENT_CARD: // if action is type of UPDATE_INDEX_OF_CURRENT_CARD, run
+    case actions.INCREMENT_QUEUE_INDEX: // if action is type of INCREMENT_QUEUE_INDEX, increase index
       newQueue.index += 1;
+      return newQueue; // new state
+    case actions.DECREMENT_QUEUE_INDEX: // if action is type of DECREMENT_QUEUE_INDEX, decrease index
+      newQueue.index -= 1;
       return newQueue; // new state
     case actions.RESET_QUEUE:
       newQueue.cards = [];

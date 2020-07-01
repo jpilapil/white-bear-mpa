@@ -8,15 +8,17 @@ import actions from "../../store/actions";
 class ReviewAnswer extends React.Component {
   goToNextCard() {
     // if queue is empty, go to out of cards page
+    // you're on the last card
     if (this.props.queue.index === this.props.queue.cards.length - 1) {
-      this.props.dispatch({ type: actions.RESET_QUEUE });
+      this.props.dispatch({ type: actions.INCREMENT_QUEUE_INDEX }); // you still want to increment, because you still need to decrement with the previous card button on the out of cards page
       this.props.history.push("/review-empty");
     } else {
       // if queue is not empty, go to next card
-      this.props.dispatch({ type: actions.UPDATE_INDEX_OF_CURRENT_CARD });
+      this.props.dispatch({ type: actions.INCREMENT_QUEUE_INDEX });
       this.props.history.push("/review-imagery");
     }
   }
+
   render() {
     const memoryCard = this.props.queue.cards[this.props.queue.index]; // get all the cards from the queue and use bracket notation to find the index of the current card
     return (

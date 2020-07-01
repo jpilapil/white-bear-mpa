@@ -1,8 +1,9 @@
 import React from "react";
 import AppTemplate from "../ui/AppTemplate";
 import MemoryCard from "../ui/MemoryCard";
-import memoryCards from "../../mock-data/memory-cards";
+
 import orderBy from "lodash/orderBy";
+import axios from "axios";
 
 // const memoryCard = memoryCards[2];
 
@@ -10,11 +11,37 @@ export default class AllCards extends React.Component {
   constructor(props) {
     super(props);
 
+    // initial LOCAL state
     this.state = {
       order: '[["createdAt"], ["desc"]]',
-      displayedMemoryCards: orderBy(memoryCards, '[["createdAt"], ["desc"]]'),
-      allMemoryCards: orderBy(memoryCards, '[["createdAt"], ["desc"]]'),
+      displayedMemoryCards: [],
+      allMemoryCards: [],
     };
+  }
+
+  // componentDidMount is a lifecycle method, does not need to be called somewhere else, will always run
+  componentDidMount() {
+    axios
+      .get(
+        "https://raw.githubusercontent.com/jpilapil/white-bear-mpa/master/src/mock-data/memory-cards.json"
+      )
+      .then((res) => {
+        // use arrow function to grant access to 'this' https://stackoverflow.com/questions/38238512/react-this-is-undefined
+        // handle success
+        console.log(res.data);
+        const memoryCards = res.data;
+        this.setState({
+          displayedMemoryCards: orderBy(
+            memoryCards,
+            '[["createdAt"], ["desc"]]'
+          ),
+          allMemoryCards: orderBy(memoryCards, '[["createdAt"], ["desc"]]'),
+        });
+      })
+      .catch((error) => {
+        // handle error
+        console.log(error);
+      });
   }
 
   filterByInput() {

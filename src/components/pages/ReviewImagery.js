@@ -17,7 +17,7 @@ class ReviewImagery extends React.Component {
         .get(
           "https://raw.githubusercontent.com/jpilapil/white-bear-mpa/master/src/mock-data/memory-cards.json"
         )
-        .then(function (res) {
+        .then((res) => {
           // handle success
           console.log(res);
           props.dispatch({
@@ -25,11 +25,16 @@ class ReviewImagery extends React.Component {
             payload: res.data,
           }); // payload = all of our data(array of objects)
         })
-        .catch(function (error) {
+        .catch((error) => {
           // handle error
           console.log(error);
         });
     }
+  }
+
+  goToPrevCard() {
+    this.props.dispatch({ type: actions.DECREMENT_QUEUE_INDEX });
+    this.props.history.push("/review-answer");
   }
 
   render() {
@@ -44,9 +49,17 @@ class ReviewImagery extends React.Component {
               </div>
             </div>
           </div>
-          <Link to="/all-cards" className="btn btn-link mt-2">
-            Previous card
-          </Link>
+          {this.props.queue.index > 0 && ( // only show button if index of queue array is > 0
+            <button
+              className="btn btn-link mt-2"
+              onClick={() => {
+                this.goToPrevCard();
+              }}
+            >
+              Previous card
+            </button>
+          )}
+
           <div className="float-right mt-2 ml-5">
             <Link
               to="/review-answer"
