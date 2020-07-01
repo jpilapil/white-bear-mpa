@@ -19,6 +19,17 @@ class ReviewAnswer extends React.Component {
     }
   }
 
+  storeEditableCard() {
+    const memoryCard = this.props.queue.cards[this.props.queue.index];
+    this.props.dispatch({
+      type: actions.STORE_EDITABLE_CARD,
+      payload: {
+        card: memoryCard,
+        prevRoute: "/review-answer",
+      },
+    });
+  }
+
   render() {
     const memoryCard = this.props.queue.cards[this.props.queue.index]; // get all the cards from the queue and use bracket notation to find the index of the current card
     return (
@@ -35,7 +46,13 @@ class ReviewAnswer extends React.Component {
           </div>
         </div>
         {/* buttons */}
-        <Link to="/edit" className="btn btn-link">
+        <Link
+          to="/edit"
+          className="btn btn-link"
+          onClick={() => {
+            this.storeEditableCard();
+          }}
+        >
           Edit
         </Link>
         <div className="float-right">

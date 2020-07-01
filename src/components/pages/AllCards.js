@@ -26,16 +26,13 @@ export default class AllCards extends React.Component {
         "https://raw.githubusercontent.com/jpilapil/white-bear-mpa/master/src/mock-data/memory-cards.json"
       )
       .then((res) => {
-        // use arrow function to grant access to 'this' https://stackoverflow.com/questions/38238512/react-this-is-undefined
+        // use ES6 arrow function to grant access to 'this' https://stackoverflow.com/questions/38238512/react-this-is-undefined
         // handle success
         console.log(res.data);
         const memoryCards = res.data;
         this.setState({
-          displayedMemoryCards: orderBy(
-            memoryCards,
-            '[["createdAt"], ["desc"]]'
-          ),
-          allMemoryCards: orderBy(memoryCards, '[["createdAt"], ["desc"]]'),
+          displayedMemoryCards: orderBy(memoryCards, '["createdAt"], ["desc"]'),
+          allMemoryCards: orderBy(memoryCards, '["createdAt"], ["desc"]'),
         });
       })
       .catch((error) => {

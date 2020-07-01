@@ -6,13 +6,14 @@ import memoryCards from "../../mock-data/memory-cards";
 import toDisplayDate from "date-fns/format";
 import classnames from "classnames";
 import { checkIsOver, MAX_CARD_CHARS } from "../../utils/helpers";
+import { connect } from "react-redux";
 
 const memoryCard = memoryCards[2];
 
-export default class Edit extends React.Component {
+class Edit extends React.Component {
   constructor(props) {
     super(props);
-    console.log("in here");
+
     this.state = {
       answerText: memoryCard.answer,
       imageryText: memoryCard.imagery,
@@ -52,15 +53,9 @@ export default class Edit extends React.Component {
           <div className="mb-2">
             <div className="card bg-primary">
               <div className="card-body">
-                {/* <textarea
-                  rows="11"
-                  className="d-sm-none"
-                  defaultValue={memoryCard.imagery}
-                  autoFocus
-                ></textarea> */}
                 <textarea
                   rows="8"
-                  defaultValue={memoryCard.imagery}
+                  defaultValue={this.props.editableCard.card.imagery}
                   autoFocus
                   onChange={(e) => this.setImageryText(e)}
                 ></textarea>
@@ -69,15 +64,9 @@ export default class Edit extends React.Component {
 
             <div className="card bg-secondary">
               <div className="card-body">
-                {/* <textarea
-                  rows="11"
-                  className="d-sm-none"
-                  defaultValue={memoryCard.answer}
-                  autoFocus
-                ></textarea> */}
                 <textarea
                   rows="8"
-                  defaultValue={memoryCard.answer}
+                  defaultValue={this.props.editableCard.card.answer}
                   autoFocus
                   onChange={(e) => this.setAnswerText(e)}
                 ></textarea>
@@ -146,12 +135,22 @@ export default class Edit extends React.Component {
               <br />
             </p>
             <p className="col-5">
-              {toDisplayDate(memoryCard.createdAt, "MMM. d, y")} <br />
-              {toDisplayDate(memoryCard.lastAttemptAt, "MMM. d, y")}
+              {toDisplayDate(
+                this.props.editableCard.card.createdAt,
+                "MMM. d, y"
+              )}{" "}
               <br />
-              {toDisplayDate(memoryCard.nextAttemptAt, "MMM. d, y")}
+              {toDisplayDate(
+                this.props.editableCard.card.lastAttemptAt,
+                "MMM. d, y"
+              )}
               <br />
-              {memoryCard.totalSuccessfulAttempts}
+              {toDisplayDate(
+                this.props.editableCard.card.nextAttemptAt,
+                "MMM. d, y"
+              )}
+              <br />
+              {this.props.editableCard.card.totalSuccessfulAttempts}
               <br />
             </p>
 
@@ -187,3 +186,11 @@ export default class Edit extends React.Component {
     );
   }
 }
+
+// map the gloabal state from redux to the local properties of this component
+function mapStateToProps(state) {
+  return {
+    editableCard: state.editableCard,
+  };
+}
+export default connect(mapStateToProps)(Edit);
