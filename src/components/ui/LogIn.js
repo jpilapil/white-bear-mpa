@@ -5,6 +5,8 @@ import { v4 as getUuid } from "uuid";
 import { withRouter } from "react-router-dom";
 import { EMAIL_REGEX } from "../../utils/helpers";
 import axios from "axios";
+import actions from "../../store/actions";
+import { connect } from "react-redux";
 
 class LogIn extends React.Component {
   constructor(props) {
@@ -15,21 +17,6 @@ class LogIn extends React.Component {
       hasEmailError: false,
       hasPasswordError: false,
     };
-  }
-
-  componentDidMount() {
-    axios
-      .get(
-        "https://raw.githubusercontent.com/jpilapil/white-bear-mpa/master/src/mock-data/memory-cards.json"
-      )
-      .then((res) => {
-        const currentUser = res.data;
-        console.log(currentUser);
-      })
-      .catch((error) => {
-        // handle error
-        console.log(error);
-      });
   }
 
   // email error messages
@@ -87,7 +74,24 @@ class LogIn extends React.Component {
         password: hash(passwordInput),
         createdAt: Date.now(),
       };
-      console.log(user);
+      console.log("created user object for POST: ", user);
+      // mimis api response
+      axios
+        .get(
+          "https://raw.githubusercontent.com/jpilapil/white-bear-mpa/master/src/mock-data/user.json"
+        )
+        .then((res) => {
+          const currentUser = res.data;
+          console.log(currentUser);
+          this.props.dispatch({
+            type: actions.UPDATE_CURRENT_USER,
+            payload: res.data,
+          });
+        })
+        .catch((error) => {
+          // handle error
+          console.log(error);
+        });
       this.props.history.push("/create-answer");
     }
   }
@@ -153,4 +157,8 @@ class LogIn extends React.Component {
     );
   }
 }
-export default withRouter(LogIn);
+function mapStateToProps(state) {
+  // map state to props in local component
+  return {};
+}
+export default withRouter(connect(mapStateToProps)(LogIn));
