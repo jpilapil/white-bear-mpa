@@ -6,6 +6,12 @@ import { connect } from "react-redux";
 import actions from "../../store/actions";
 
 class ReviewAnswer extends React.Component {
+  constructor(props) {
+    super(props);
+    if (this.props.queue.cards.length === 0) {
+      this.props.history.push("/review-empty");
+    }
+  }
   goToNextCard() {
     // if queue is empty, go to out of cards page
     // you're on the last card
